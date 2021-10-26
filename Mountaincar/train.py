@@ -24,23 +24,27 @@ def pick_action(epsilon, Q, state):
         action = np.argmax(Q[state])
     return action    
 
-def train():
-    q_shape = tuple(env.observation_space, env.action_space)
-    Q = np.zeros(q_shape)
-    for _ in range(episodes):
-        state = env.reset()
-        step = 0 
-        action = pick_action(epsilon, Q, state)
-        while step < max_steps:
-            new_state, reward, done, info = env.step(action)
-            #update Q:
-            q_current = Q[state][action]
-            q_target = np.max(Q[new_state])
-            q_current = (1 - alpha) * q_current + alpha * (reward + gamma * q_target)
-            if done:
-                break
-            step += 1
-            
+q_shape = tuple([env.observation, env.action_space.n])
+Q = np.zeros(shape = q_shape)
+for _ in range(episodes):
+    state = env.reset()
+    step = 0 
+    action = pick_action(epsilon, Q, state)
+    while step < max_steps:
+        env.render()
+        new_state, reward, done, info = env.step(action)
+        q_current = Q[state][action]
+        q_target = np.max(Q[new_state])
+        q_current = (1 - alpha) * q_current + alpha * (reward + gamma * q_target)
+        state = new_state
+        if done:
+            break
+        step += 1
+
+
+
+
+
 
 
 
