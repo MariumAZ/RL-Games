@@ -14,8 +14,11 @@ step = distance / n_states
 
 
 def discretize(state):
+
     """
     This functions  assigns a discrete number  to a state 
+    Help : https://github.com/L42Project/Tutoriels/
+    blob/master/Divers/renforcement2/MountainCar_common.py
     """
 
     state = (state - low_values) / step
