@@ -2,7 +2,7 @@
 
 import gym
 import numpy as np
-import utility
+import utils
 
 episodes = 250000
 #discount rate : how much value we give to the future 
@@ -25,25 +25,25 @@ print(env.goal_position)
 
 total_rewards = []
 rewards_per_episode = []
-q_shape = [utility.n_states, utility.n_states,  utility.n_actions]
-#Q = np.zeros(shape = tuple(q_shape))
+q_shape = [utils.n_states, utils.n_states,  utils.n_actions]
+
 Q = np.random.uniform(low=-1, high=1, size= tuple(q_shape))
 for episode in range(episodes):
     state = env.reset()
-    state = utility.discretize(state)
+    state = utils.discretize(state)
     done = False
     while not done:
         #pick an action
-        action = utility.pick_action(epsilon, Q, state)
+        action = utils.pick_action(epsilon, Q, state)
         env.render()
         new_state, reward, done, info = env.step(action)
-        new_state = utility.discretize(new_state)
+        new_state = utils.discretize(new_state)
         q_current = Q[state][action]
         #print("q_current", q_current)
         q_target = np.max(Q[new_state])
         q_current = (1 - alpha) * q_current + alpha * (reward + gamma * q_target)
         state = new_state
-        print(state)
+        #print(state)
         if new_state[0] >= env.goal_position :
             reward = 1
         rewards_per_episode.append(reward)
@@ -51,8 +51,10 @@ for episode in range(episodes):
             break    
     total_rewards.append(rewards_per_episode)    
     #reduce epsilon decay
-    epsilon = (min_epsilon + (init_epsilon - min_epsilon) * np.exp(-epsilon_decay * episode))
-    #print(Q)
+    #epsilon = (min_epsilon + (init_epsilon - min_epsilon) * np.exp(-epsilon_decay * episode))
+    epsilon *= 1 - 3 *(episode / episodes)
+    print(episode, "epsilon :",epsilon)
+ 
 np.save("Mountaincar_qtable", Q)
 env.close()
         

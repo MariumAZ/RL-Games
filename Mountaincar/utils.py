@@ -33,6 +33,8 @@ def pick_action(epsilon, Q, state):
         action = np.argmax(Q[state])
     return action    
 
+print(discretize([0.0, 0.7]))    
+
 
 
 
