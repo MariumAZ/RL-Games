@@ -39,7 +39,12 @@ def discretize(state):
     state = (state - low_values) / step
     return tuple(state.astype(int))
 ```    
+Epsilon greedy was updated  using two methods : 
 
+```python
+epsilon = (min_epsilon + (init_epsilon - min_epsilon) * np.exp(-epsilon_decay * episode))
+epsilon *= 1 - 3 *(episode / episodes)
+```
 
 # Bibliography:
 
