@@ -1,4 +1,8 @@
+#!usr/bin/env python3
 
+""""
+Discretize initial states to make use of the belleman equation
+"""
 import numpy as np
 
 low_values = np.array([-1.2, -0.7])
@@ -9,7 +13,7 @@ distance = (high_values - low_values)
 step = distance / n_states
 
 
-def discretise(state):
+def discretize(state):
     """
     This functions  assigns a discrete number  to a state 
     """
