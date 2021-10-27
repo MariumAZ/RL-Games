@@ -7,17 +7,39 @@ The car’s state, at any point in time, is given by a vector containing its :
 - horizonal position 
 - velocity.
 
+
+The car can take 3 actions : 
+- left(0) 
+- no push(1) 
+- right(2)
+
 The state space represents a 2-dimensional box.
 To view the values that our states can take : 
 
 
-```
+```python
 > print(env.observation_space.low)
 [-1.2  -0.07]
 >print(env.observation_space.high)
 [0.6  0.07]
 
 ```
+The states space in infinite so in order to make use of the Bellman equation we need to discretize the space.
+For this we use a function discretize in utils :
+
+```python
+def discretize(state):
+
+    """
+    This functions  assigns a discrete number  to a state 
+    Help : https://github.com/L42Project/Tutoriels/
+    blob/master/Divers/renforcement2/MountainCar_common.py
+    """
+
+    state = (state - low_values) / step
+    return tuple(state.astype(int))
+```    
+
 
 # Bibliography:
 
